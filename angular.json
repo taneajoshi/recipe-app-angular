@@ -93,12 +93,28 @@
               "src/assets"
             ],
             "styles": [
+              "node_module/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "4ec62752-4d6d-4064-a703-bee38e8bb3b6",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
