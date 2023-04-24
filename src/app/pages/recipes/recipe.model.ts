@@ -1,4 +1,4 @@
-//We can define how a recipe shoould look like throughout the application.
+//We can define how a recipe should look like throughout the application.
 export class Recipe {
     public name: string;
     public description: string;

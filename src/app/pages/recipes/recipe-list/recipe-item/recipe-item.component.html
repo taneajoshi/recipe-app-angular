@@ -1,1 +1,9 @@
-<p>recipe-item works!</p>
+<div class="row bg-light justify-content-between rounded-2 mb-4 p-3" (click)="onSelected()">
+    <div class="col-md-6">
+        <h2>{{ recipe.name }}</h2>
+        <p>{{ recipe.description }}</p>
+    </div>
+    <div class="col-md-4">
+        <img [src]="recipe.imageUrl" class="w-100" alt="image of recipe">
+    </div>
+</div>
