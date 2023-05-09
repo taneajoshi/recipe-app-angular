@@ -6,16 +6,12 @@
         <h2> {{recipe.name}} </h2>
     </div>
     <div class="col-12">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle">
-                Manage Recipe <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">To Shopping Lisr</a></li>
-                <li><a href="#">Edit Recipe</a></li>
-                <li><a href="#">Delete Recipe</a></li>
-            </ul>
-        </div>
+      <button mat-button [matMenuTriggerFor]="manageRecipeMenu">Manage Recipe</button>
+      <mat-menu #manageRecipeMenu="matMenu">
+        <button mat-menu-item>To Shopping List</button>
+        <button mat-menu-item>Edit Recipe</button>
+        <button mat-menu-item>Delete Recipe</button>
+      </mat-menu>
     </div>
     <div class="col-12">
       {{recipe.description}}
