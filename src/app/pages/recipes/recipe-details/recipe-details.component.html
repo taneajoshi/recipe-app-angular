@@ -17,6 +17,9 @@
       {{recipe.description}}
     </div>
     <div class="col-12">
-        Ingredients
+        <h3 class="fw-bold">Ingredients</h3>
+        <ul class="list-group list-unstyled">
+          <li *ngFor="let ingredients of recipe.Ingredients" class="list-group-item"><span>{{ingredients.name}}</span>: <span class="ms-4">{{ingredients.amount}}</span></li>
+        </ul>
     </div>
 </div>
