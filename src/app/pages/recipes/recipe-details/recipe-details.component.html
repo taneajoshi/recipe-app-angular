@@ -8,7 +8,7 @@
     <div class="col-12">
       <button mat-button [matMenuTriggerFor]="manageRecipeMenu">Manage Recipe</button>
       <mat-menu #manageRecipeMenu="matMenu">
-        <button mat-menu-item>To Shopping List</button>
+        <button mat-menu-item (click)="addToShoppingList()">To Shopping List</button>
         <button mat-menu-item>Edit Recipe</button>
         <button mat-menu-item>Delete Recipe</button>
       </mat-menu>
