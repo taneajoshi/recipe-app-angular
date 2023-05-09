@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Recipe } from 'src/app/pages/recipes/recipe.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
+  recipeSelected = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [
     new Recipe('test recipe', 'This is description for our test recipe', 'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg'),
     new Recipe('test recipe 2', 'This is description 2 for our test recipe', 'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg'),
