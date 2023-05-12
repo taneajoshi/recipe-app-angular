@@ -34,6 +34,5 @@ $recipe-app-aangular-theme: mat.define-light-theme((
 @include mat.all-component-themes($recipe-app-aangular-theme);
 
 /* You can add global styles to this file, and also import other style files */
-@import './styles/typography.scss';
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import './styles/typography';
+@import './styles/global';
