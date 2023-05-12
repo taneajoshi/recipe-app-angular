@@ -8,6 +8,8 @@ import { RecipeDetailsComponent } from './recipe-details/recipe-details.componen
 import { MenuModule } from 'src/app/menu/menu.module';
 import {MatMenuModule} from '@angular/material/menu';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
+import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
+
 
 const routes: Routes = [
   {
@@ -18,14 +20,21 @@ const routes: Routes = [
       component: RecipeStartComponent,
     },
     {
+      path: 'new',
+      component: EditRecipeComponent,
+    },
+    {
       path: ':id',
       component: RecipeDetailsComponent,
-    }]
+    },{
+      path: ':id/edit',
+      component: EditRecipeComponent,
+    },]
   },
 ];
 
 @NgModule({
-  declarations: [RecipesComponent, RecipeItemComponent, RecipeListComponent, RecipeDetailsComponent, RecipeStartComponent],
+  declarations: [RecipesComponent, RecipeItemComponent, RecipeListComponent, RecipeDetailsComponent, RecipeStartComponent, EditRecipeComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
