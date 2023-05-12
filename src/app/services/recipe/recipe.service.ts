@@ -7,8 +7,11 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 })
 export class RecipeService {
   recipeSelected = new EventEmitter < Recipe > ();
+  public singleRecipe: Recipe[];
   private recipes: Recipe[] = [
-    new Recipe('test recipe',
+    new Recipe(
+       1,
+      'test recipe',
       'This is description for our test recipe',
       'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
       [
@@ -17,6 +20,7 @@ export class RecipeService {
       ]
     ),
     new Recipe(
+       2,
       'test recipe 2',
       'This is description 2 for our test recipe',
       'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
@@ -30,5 +34,10 @@ export class RecipeService {
     /**Using slice we will get a copy of our Recipe array and not the actual array so no one
     from outside can access our Recipe inside private Recipe service class.**/
     return this.recipes.slice();
+  }
+
+  getRecipe(id: number) {
+    const recipe = this.recipes.slice().find(recipe => recipe.id === id);
+    return recipe;
   }
 }

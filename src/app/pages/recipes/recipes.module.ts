@@ -7,16 +7,25 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { MenuModule } from 'src/app/menu/menu.module';
 import {MatMenuModule} from '@angular/material/menu';
+import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RecipesComponent,
-  }
+    children: [{
+      path: '',
+      component: RecipeStartComponent,
+    },
+    {
+      path: ':id',
+      component: RecipeDetailsComponent,
+    }]
+  },
 ];
 
 @NgModule({
-  declarations: [RecipesComponent, RecipeItemComponent, RecipeListComponent, RecipeDetailsComponent],
+  declarations: [RecipesComponent, RecipeItemComponent, RecipeListComponent, RecipeDetailsComponent, RecipeStartComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
