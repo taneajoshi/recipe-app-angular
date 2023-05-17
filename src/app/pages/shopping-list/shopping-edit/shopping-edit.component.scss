@@ -3,6 +3,8 @@
   font-size: 14px;
 }
 
+// Its important to add .ng-touched with .ng-invalid class as by deafult angular
+// treat all the inouts as invalid in the case if we have added required. (On first laod theres no value so its still invalid.)
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
