@@ -12,14 +12,8 @@ export class ShoppingEditComponent {
 
   constructor(private shoppingListService: ShoppingListService) {}
   onAddItem() {
-    //Need to create new object for each add item else due to object reference and mutation we will also change the old ingredients added.
-    const newIngredients: Ingredient = {
-      name: this.addItemForm.value.name,
-      amount: this.addItemForm.value.amount,
-    }
-
+    const newIngredients = new Ingredient(this.addItemForm.value.name, this.addItemForm.value.amount)
     this.shoppingListService.addIngredient(newIngredients);
-    console.log(newIngredients);
     this.addItemForm.reset();
   }
 
