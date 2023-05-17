@@ -8,16 +8,24 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
   styleUrls: ['./shopping-edit.component.scss']
 })
 export class ShoppingEditComponent {
-  @ViewChild('nameInput') nameInput: ElementRef;
-  @ViewChild('amountInput') amountInput: ElementRef;
+  @ViewChild('addItemForm') addItemForm;
 
   constructor(private shoppingListService: ShoppingListService) {}
+  onAddItem() {
+    //Need to create new object for each add item else due to object reference and mutation we will also change the old ingredients added.
+    const newIngredients: Ingredient = {
+      name: this.addItemForm.value.name,
+      amount: this.addItemForm.value.amount,
+    }
 
-  submitForm(e) {
-    e.preventDefault();
-    const name = this.nameInput.nativeElement.value;
-    const amount = this.amountInput.nativeElement.value;
-    const newIngredients = new Ingredient(name, amount);
     this.shoppingListService.addIngredient(newIngredients);
+    console.log(newIngredients);
+    this.addItemForm.reset();
+  }
+
+  validateInput(event: KeyboardEvent) {
+    if (event.key === '-') {
+      event.preventDefault();
+    }
   }
 }

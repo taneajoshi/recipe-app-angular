@@ -9,6 +9,7 @@ import { MenuModule } from 'src/app/menu/menu.module';
 import {MatMenuModule} from '@angular/material/menu';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MenuModule,
     MatMenuModule,
+    FormsModule
   ]
 })
 export class RecipesModule { }
