@@ -1,13 +1,13 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Recipe Book</a>
-    <ul class="ms-auto d-flex me-5 mb-2 mb-lg-0">
-      <li class="mx-4"><a class="text-white text-decoration-none" routerLink="/recipes" routerLinkActive="fw-bold text-decoration-underline">Recipes</a></li>
-      <li class="mx-4"><a class="text-white text-decoration-none" routerLink="/shopping-list" routerLinkActive="fw-bold text-decoration-underline">Shopping List</a></li>
+    <a class="navbar-brand text-secondary" routerLink="/">Recipe Book</a>
+    <ul class="ms-auto d-flex me-5 mb-2 mb-lg-0 list-unstyled">
+      <li class="mx-4"><a class="text-secondary text-decoration-none" routerLink="/recipes" routerLinkActive="fw-bold text-decoration-underline">Recipes</a></li>
+      <li class="mx-4"><a class="text-secondary text-decoration-none" routerLink="/shopping-list" routerLinkActive="fw-bold text-decoration-underline">Shopping List</a></li>
     </ul>
     <ul class="navbar-nav navbar-right">
       <li class="nav-item dropdown">
-        <a mat-button [matMenuTriggerFor]="ManageMenu" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        <a mat-button [matMenuTriggerFor]="ManageMenu" class="nav-link dropdown-toggle text-secondary" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
           Manage <span class="caret"></span>
         </a>

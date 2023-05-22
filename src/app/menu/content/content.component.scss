@@ -6,4 +6,11 @@
 
 main {
     flex-grow: 1;
+    margin-top: 56px;
+}
+
+app-header {
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  position: relative;
 }
