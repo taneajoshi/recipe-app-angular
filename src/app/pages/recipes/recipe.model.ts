@@ -4,15 +4,15 @@ import { Ingredient } from "src/app/shared/ingredient.model";
 export class Recipe {
     public id: number;
     public name: string;
-    public description: string;
-    public imageUrl: string;
-    public Ingredients: Ingredient[];
+    public desc: string;
+    public image: string;
+    public ingredients: Ingredient[];
 
-    constructor(id: number, name: string, desc: string, imageUrl: string, ingredients: Ingredient[]) {
+    constructor(id: number, name: string, desc: string, image: string, ingredients: Ingredient[]) {
         this.id = id;
         this.name = name;
-        this.description = desc;
-        this.imageUrl = imageUrl;
-        this.Ingredients = ingredients;
+        this.desc = desc;
+        this.image = image;
+        this.ingredients = ingredients;
     }
 }

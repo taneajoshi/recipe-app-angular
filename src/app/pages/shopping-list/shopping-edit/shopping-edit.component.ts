@@ -25,7 +25,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       this.editMode = true;
       this.editIngredientIndex = id;
       this.editedIngredient = this.shoppingListService.getInredient(this.editIngredientIndex);
-      console.log(this.editedIngredient);
       this.patchIngredientForm();
     });
   }
@@ -38,8 +37,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onAddItem() {
-    console.log('add item called');
-    const newIngredients = new Ingredient(this.generateIngredientIdService.generateId(), this.addItemForm.value.name, this.addItemForm.value.amount)
+    const newIngredients = new Ingredient(this.generateIngredientIdService.generateId(), this.addItemForm.value.name, this.addItemForm.value.amount);
     this.shoppingListService.addIngredient(newIngredients);
     this.clearForm()
   }

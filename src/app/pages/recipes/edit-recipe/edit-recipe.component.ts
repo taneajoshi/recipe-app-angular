@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
+import { Recipe } from '../recipe.model';
+import { GenerateRecipeIdService } from 'src/app/services/generateRecipeId/generate-recipe-id.service';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -12,7 +14,7 @@ export class EditRecipeComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
-  constructor(public route: ActivatedRoute, public recipeService: RecipeService){}
+  constructor(public route: ActivatedRoute, public recipeService: RecipeService, public generateRecipeId: GenerateRecipeIdService){}
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
@@ -21,12 +23,11 @@ export class EditRecipeComponent implements OnInit {
         this.editMode = params['id'] != null && params['id'] !== undefined;
       }
     )
-      console.log('edit mode'+ this.editMode);
     this.initForm();
   }
 
   initForm() {
-    console.log('init');
+    let recipeId: number;
     let recipeName = '';
     let recipeImage = '';
     let recipeDescription = '';
@@ -34,12 +35,12 @@ export class EditRecipeComponent implements OnInit {
 
     if(this.editMode){
       const recipe = this.recipeService.getRecipe(this.id);
-      console.log(recipe);
+      recipeId = recipe.id;
       recipeName = recipe.name;
-      recipeImage = recipe.imageUrl;
-      recipeDescription = recipe.description;
-      if(recipe.Ingredients) {
-        for(const ingredient of recipe.Ingredients) {
+      recipeImage = recipe.image;
+      recipeDescription = recipe.desc;
+      if(recipe.ingredients) {
+        for(const ingredient of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
               'name': new FormControl(ingredient.name, Validators.required),
@@ -51,6 +52,7 @@ export class EditRecipeComponent implements OnInit {
     }
 
     this.recipeForm = new FormGroup({
+      'id': new FormControl(recipeId, Validators.required),
       'name': new FormControl(recipeName, Validators.required),
       'image': new FormControl(recipeImage, Validators.required),
       'desc':  new FormControl(recipeDescription, Validators.required),
@@ -68,7 +70,20 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onRecipeFormSubmit() {
-    console.log(this.recipeForm);
+    if(!this.editMode) {
+      const newRecipe = new Recipe(this.generateRecipeId.generateId(), this.recipeForm.value['name'], this.recipeForm.value['desc'], this.recipeForm.value['image'], this.recipeForm.value['ingredients'] );
+      this.recipeService.addRecipe(newRecipe);
+    }
+    //If our new Recipe format is exactly same as in the form so we can use directly this.recipeForm.value instead of storing all the values in a constant. but since we are creating dynamic ids and not have any api yet so we would have to use above method.
+    else {
+      console.log(this.recipeForm.value);
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    }
+  }
+
+  clearForm() {
+    this.recipeForm.reset();
+    this.editMode = false;
   }
 
   get controls() {

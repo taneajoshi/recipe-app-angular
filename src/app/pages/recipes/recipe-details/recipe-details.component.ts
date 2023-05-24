@@ -19,12 +19,13 @@ export class RecipeDetailsComponent implements OnInit {
       (params: Params) => {
         this.id = +params['id'];
         this.recipe = this.recipeService.getRecipe(this.id);
+        console.log(this.recipe, this.recipe.ingredients);
       }
     )
   }
 
   addToShoppingList() {
-    const ingredients = this.recipe.Ingredients;
+    const ingredients = this.recipe.ingredients;
     ingredients.forEach(ingredient => {
       this.shoppingListService.addIngredient(ingredient);
     })

@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Recipe } from 'src/app/pages/recipes/recipe.model';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { GenerateIngredientIdService } from '../generateIngredientId/generate-ingredient-id.service';
+import { Subject } from 'rxjs';
+import { GenerateRecipeIdService } from '../generateRecipeId/generate-recipe-id.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
+  recipesChanged = new Subject<Recipe[]>();
   public singleRecipe: Recipe[];
   private recipes: Recipe[] = [
     new Recipe(
-       1,
+       this.generateRecipeId.generateId(),
       'test recipe',
       'This is description for our test recipe',
       'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
@@ -20,7 +23,7 @@ export class RecipeService {
       ]
     ),
     new Recipe(
-       2,
+       this.generateRecipeId.generateId(),
       'test recipe 2',
       'This is description 2 for our test recipe',
       'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
@@ -30,7 +33,7 @@ export class RecipeService {
       ]),
   ];
 
-  constructor(private generateIngredientIdService: GenerateIngredientIdService){}
+  constructor(private generateIngredientIdService: GenerateIngredientIdService, private generateRecipeId: GenerateRecipeIdService){}
 
   getRecipes() {
     /**Using slice we will get a copy of our Recipe array and not the actual array so no one
@@ -41,5 +44,19 @@ export class RecipeService {
   getRecipe(id: number) {
     const recipe = this.recipes.slice().find(recipe => recipe.id === id);
     return recipe;
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(id: number, newRecipe: Recipe) {
+    const index = this.recipes.findIndex(item => item.id === id);
+    if (index !== -1) {
+      this.recipes[index] = newRecipe;
+      this.recipesChanged.next(this.recipes.slice());
+      console.log(this.recipes);
+    }
   }
 }

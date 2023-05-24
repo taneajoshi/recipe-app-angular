@@ -39,9 +39,7 @@ export class ShoppingListService {
   }
 
   deleteIngredient(id: number) {
-    console.log('deleting');
     const index = this.ingredients.findIndex(item => item.id === id);
-    console.log(index);
     if (index !== -1) {
       this.ingredients.splice(index, 1);
       this.ingredientChanged.next(this.ingredients.slice());
