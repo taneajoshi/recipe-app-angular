@@ -7,4 +7,15 @@ import { RecipeService } from 'src/app/services/recipe/recipe.service';
   templateUrl: './recipe-start.component.html',
   styleUrls: ['./recipe-start.component.scss']
 })
-export class RecipeStartComponent {}
+export class RecipeStartComponent implements OnInit {
+  constructor(private recipeService: RecipeService) {}
+  recipes: Recipe[];
+  ngOnInit() {
+    this.recipes = this.recipeService.getRecipes();
+    this.recipeService.recipesChanged.subscribe(
+      (recipes: Recipe[]) => {
+        this.recipes = recipes;
+      }
+    );
+  }
+}

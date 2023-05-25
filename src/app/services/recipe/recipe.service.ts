@@ -10,7 +10,7 @@ import { GenerateRecipeIdService } from '../generateRecipeId/generate-recipe-id.
 })
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  public singleRecipe: Recipe[];
+  //Dummy Recipes
   private recipes: Recipe[] = [
     new Recipe(
        this.generateRecipeId.generateId(),
@@ -35,28 +35,67 @@ export class RecipeService {
 
   constructor(private generateIngredientIdService: GenerateIngredientIdService, private generateRecipeId: GenerateRecipeIdService){}
 
+  //Function to get list of all the recipes
   getRecipes() {
     /**Using slice we will get a copy of our Recipe array and not the actual array so no one
     from outside can access our Recipe inside private Recipe service class.**/
     return this.recipes.slice();
   }
 
+  /**
+   * Function to get single recipe based on the id
+   * @param id
+   */
   getRecipe(id: number) {
     const recipe = this.recipes.slice().find(recipe => recipe.id === id);
     return recipe;
   }
 
+  /**
+   * Function to add a new recipe
+   * @param recipe
+   */
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
     this.recipesChanged.next(this.recipes.slice());
   }
 
+   /**
+   * Function to update an existing recipe
+   * @param id
+   * @param recipe
+   */
   updateRecipe(id: number, newRecipe: Recipe) {
     const index = this.recipes.findIndex(item => item.id === id);
     if (index !== -1) {
       this.recipes[index] = newRecipe;
       this.recipesChanged.next(this.recipes.slice());
-      console.log(this.recipes);
+    }
+  }
+
+  /**
+   * Function to update an existing recipe
+   * @param id
+   * @param recipe
+   */
+  deleteRecipe(id: number) {
+    const index = this.recipes.findIndex(item => item.id === id);
+    if (index !== -1) {
+      this.recipes.splice(index, 1);
+      this.recipesChanged.next(this.recipes.slice());
+    }
+  }
+
+  /**
+   * Function to delete ingredient in a recipe
+   * @param ingredientId
+   * @param recipeId
+   */
+  deleteRecipeIngredient(ingredientId: number, recipeId: number){
+    const recipe = this.getRecipe(recipeId);
+    const index = recipe.ingredients.findIndex(item => item.id === ingredientId);
+    if (index !== -1) {
+      recipe.ingredients.splice(index, 1);
     }
   }
 }

@@ -33,7 +33,7 @@
          *ngFor="let ingredientCtrl of controls; let i = index;" [formGroupName]="i">
           <div class="col-md-8">
             <div class="form-group mb-3">
-              <input type="text" class="form-control" formControlName="name">
+              <input type="text" placeholder="name"  class="form-control" formControlName="name">
               <span class="error"
               *ngIf="ingredientCtrl.get('name').invalid && ingredientCtrl.get('name').touched">
               This field is required.</span>
@@ -41,14 +41,14 @@
           </div>
           <div class="col-md-2">
             <div class="form-group mb-3">
-              <input type="number" class="form-control" (keydown)="validateInput($event)" formControlName="amount">
+              <input type="number" min="0" placeholder="amount" class="form-control" (keydown)="validateInput($event)" formControlName="amount">
               <span class="error"
               *ngIf="ingredientCtrl.get('amount').invalid && ingredientCtrl.get('amount').touched">
               This field is required.</span>
             </div>
           </div>
           <div class="col-md-2">
-            <button class="btn btn-danger w-100">Delete</button>
+            <button type="button" class="btn btn-danger w-100" (click)="deleteIngredients(ingredientCtrl.value.id)">Delete</button>
           </div>
         </div>
         <button type="button" class="btn btn-primary" (click)="onAddIngredient()">Add Ingredient</button>
@@ -57,7 +57,7 @@
       <div class="text-end">
         <div class="btn-group">
           <button type="submit" class="btn btn-success" [disabled]="recipeForm.invalid">{{editMode ? 'Update' : 'Create'}}</button>
-          <button type="button" class="btn btn-danger">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="cancelEditingMode()">Cancel</button>
         </div>
       </div>
     </form>

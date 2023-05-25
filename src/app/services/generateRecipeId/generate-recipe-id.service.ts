@@ -6,10 +6,9 @@ import { Injectable } from '@angular/core';
 export class GenerateRecipeIdService {
   private nextId = 1;
 
-  generateId(): number {
+generateId(): number {
     const id = this.nextId;
     this.nextId++;
-    console.log('ran henerateId '+id);
     return id;
   }
 }
