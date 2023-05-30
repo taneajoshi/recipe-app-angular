@@ -16,6 +16,7 @@
           #email="ngModel"
           >
           <span class="error" *ngIf="email.invalid && email.touched"> Please enter a valid email. </span>
+          <span class="error" *ngIf="emailError !== '' "> {{emailError}} </span>
         </div>
         <div class="form-group mb-4">
           <label for="password">Password</label>
@@ -30,7 +31,8 @@
           #password="ngModel"
           >
           <span class="error" *ngIf="password.invalid && password.touched && password.value.length === 0">Please enter a valid password.</span>
-          <span class="error" *ngIf="password.value.length < 6 && password.value.length > 0">Password should have atleast 6 characters.</span>
+          <span class="error" *ngIf="password.value?.length < 6 && password.value?.length > 0 && !isLoginMode">Password should have atleast 6 characters.</span>
+          <span class="error" *ngIf="passwordError !== '' "> {{passwordError}} </span>
         </div>
         <div class="text-center">
           <button class="btn btn-primary w-100" type="submit"
@@ -40,7 +42,7 @@
           <button class="btn text-primary text-decoration-underline"
           (click)="onSwitchMode()"
           type="button"
-          >{{ isLoginMode ? 'LogIn' : 'Signup' }}</button> </div>
+          >{{ isLoginMode ? 'Signup' : 'Login' }}</button> </div>
         </div>
       </form>
     </div>
