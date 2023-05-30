@@ -7,12 +7,13 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
     DropdownDirective,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +22,7 @@ import { AuthComponent } from './auth/auth.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
