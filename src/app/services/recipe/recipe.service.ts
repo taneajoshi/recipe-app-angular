@@ -11,27 +11,29 @@ import { GenerateRecipeIdService } from '../generateRecipeId/generate-recipe-id.
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   //Dummy Recipes
-  private recipes: Recipe[] = [
-    new Recipe(
-       this.generateRecipeId.generateId(),
-      'test recipe',
-      'This is description for our test recipe',
-      'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
-      [
-        new Ingredient(this.generateIngredientIdService.generateId(), 'Meat', 1),
-        new Ingredient (this.generateIngredientIdService.generateId(), 'Yogurt', 1)
-      ]
-    ),
-    new Recipe(
-       this.generateRecipeId.generateId(),
-      'test recipe 2',
-      'This is description 2 for our test recipe',
-      'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
-      [
-        new Ingredient(this.generateIngredientIdService.generateId(), 'French Fries', 20),
-        new Ingredient (this.generateIngredientIdService.generateId(), 'Buns', 2)
-      ]),
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //      this.generateRecipeId.generateId(),
+  //     'test recipe',
+  //     'This is description for our test recipe',
+  //     'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
+  //     [
+  //       new Ingredient(this.generateIngredientIdService.generateId(), 'Meat', 1),
+  //       new Ingredient (this.generateIngredientIdService.generateId(), 'Yogurt', 1)
+  //     ]
+  //   ),
+  //   new Recipe(
+  //      this.generateRecipeId.generateId(),
+  //     'test recipe 2',
+  //     'This is description 2 for our test recipe',
+  //     'https://www.howtocook.recipes/wp-content/uploads/2021/05/Ratatouille-recipe.jpg',
+  //     [
+  //       new Ingredient(this.generateIngredientIdService.generateId(), 'French Fries', 20),
+  //       new Ingredient (this.generateIngredientIdService.generateId(), 'Buns', 2)
+  //     ]),
+  // ];
+
+  private recipes: Recipe[] = [];
 
   constructor(private generateIngredientIdService: GenerateIngredientIdService, private generateRecipeId: GenerateRecipeIdService){}
 
@@ -40,6 +42,11 @@ export class RecipeService {
     /**Using slice we will get a copy of our Recipe array and not the actual array so no one
     from outside can access our Recipe inside private Recipe service class.**/
     return this.recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]){
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   /**

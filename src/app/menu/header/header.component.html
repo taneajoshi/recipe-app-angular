@@ -12,8 +12,8 @@
           Manage <span class="caret"></span>
         </a>
         <mat-menu #ManageMenu="matMenu">
-          <button mat-menu-item>Save Data</button>
-          <button mat-menu-item>Fetch Data</button>
+          <button mat-menu-item (click)="saveRecipes()">Save Data</button>
+          <button mat-menu-item (click)="fetchRecipes()">Fetch Data</button>
         </mat-menu>
       </li>
     </ul>
