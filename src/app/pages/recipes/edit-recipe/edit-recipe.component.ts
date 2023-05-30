@@ -94,7 +94,10 @@ export class EditRecipeComponent implements OnInit {
   }
 
   cancelEditingMode() {
+    /** alternate way
     this.router.navigate(['../', {relativeTo: this.route}]);
+     **/
+    this.router.navigate(['recipes']);
   }
 
   deleteIngredients(ingredientId: number) {

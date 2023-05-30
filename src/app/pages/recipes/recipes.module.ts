@@ -10,6 +10,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecipeResolverService } from 'src/app/services/recipe-resolver/recipe-resolver.service';
 
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
     component: RecipesComponent,
     children: [{
       path: '',
-      component: RecipeStartComponent,
+      component: RecipeStartComponent
     },
     {
       path: 'new',
@@ -26,10 +27,10 @@ const routes: Routes = [
     },
     {
       path: ':id',
-      component: RecipeDetailsComponent,
+      component: RecipeDetailsComponent, resolve: [RecipeResolverService],
     },{
       path: ':id/edit',
-      component: EditRecipeComponent,
+      component: EditRecipeComponent, resolve: [RecipeResolverService],
     },]
   },
 ];
