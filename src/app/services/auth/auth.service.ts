@@ -1,16 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, TimeoutConfig, catchError, tap, throwError } from 'rxjs';
 import { authResponseData } from 'src/app/interfaces/auth-response-data';
 import { User } from 'src/app/models/user.model';
+import { StorageService } from '../storage/storage.service';
+import { StorageKeys } from '../storage/storage-keys.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient,
+    private storageService: StorageService,
+    private router: Router){}
 
   //SignUp
   signUp(email: string, password: string) {
@@ -84,11 +90,46 @@ export class AuthService {
       expirationDate
     );
     this.user.next(user);
-    console.log(this.user);
+    this.autoLogout(expiresIn * 1000);
+    this.storageService.set(StorageKeys.UserData, user);
+  }
+
+  //auto login on page refresh (if token is not expired)
+  autoLogin() {
+    this.storageService.get(StorageKeys.UserData).subscribe(userData => {
+      if (!userData) {
+        return;
+      }
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData._token,
+        new Date(userData._tokenExpirationDate)
+      );
+
+      if(loadedUser.token) {
+        this.user.next(loadedUser);
+        const expirationDuration =
+        new Date(userData._tokenExpirationData).getTime() - new Date().getTime();
+        this.autoLogout(expirationDuration);
+      }
+    });
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   //Logout
   logout() {
     this.user.next(null);
+    this.router.navigateByUrl('/login');
+    this.storageService.remove(StorageKeys.UserData);
+    if(this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
   }
 }
