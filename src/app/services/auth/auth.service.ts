@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Subject, catchError, tap, throwError } from 'rxjs';
 import { authResponseData } from 'src/app/interfaces/auth-response-data';
+import { User } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  user = new Subject<User>();
   constructor(private http: HttpClient){}
 
   //SignUp
@@ -29,6 +30,13 @@ export class AuthService {
             errorMessage = 'This email already exists.'
         }
         return throwError(errorMessage);
+      }),
+      tap(resData => {
+        this.handleAuthentication(
+          resData.email,
+          resData.idToken,
+          resData.idToken,
+          +resData.expiresIn);
       })
     )
   }
@@ -51,7 +59,28 @@ export class AuthService {
             errorMessage = 'Password is invalid.'
         }
         return throwError(errorMessage);
+      }),
+      tap(resData => {
+        this.handleAuthentication(
+          resData.email,
+          resData.idToken,
+          resData.idToken,
+          +resData.expiresIn);
       })
     )
+  }
+
+  private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+    //generating expiration date
+    const expirationDate = new Date(
+      new Date().getTime() + expiresIn * 1000
+    );
+    const user = new User(
+      email,
+      userId,
+      token,
+      expirationDate
+    );
+    this.user.next(user);
   }
 }
