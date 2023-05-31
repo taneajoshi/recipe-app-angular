@@ -2,6 +2,8 @@
   <div class="row mx-auto login-wrapper mx-auto align-items-center">
     <div class="col bg-white p-5">
       <h1 class="h3 fs-4 text-center mb-5">{{isLoginMode ? 'Login' : 'Create an account'}}</h1>
+      <div class="bg-danger p-2 mb-4 text-white w-100"
+      *ngIf="error">{{error}}</div>
       <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
         <div class="form-group mb-4">
           <label for="email">E-mail</label>
@@ -16,7 +18,6 @@
           #email="ngModel"
           >
           <span class="error" *ngIf="email.invalid && email.touched"> Please enter a valid email. </span>
-          <span class="error" *ngIf="emailError !== '' "> {{emailError}} </span>
         </div>
         <div class="form-group mb-4">
           <label for="password">Password</label>
@@ -27,12 +28,11 @@
           ngModel
           name="password"
           required
-          minlength="6"
+          [minlength]="isLoginMode ? null : '6'"
           #password="ngModel"
           >
           <span class="error" *ngIf="password.invalid && password.touched && password.value.length === 0">Please enter a valid password.</span>
           <span class="error" *ngIf="password.value?.length < 6 && password.value?.length > 0 && !isLoginMode">Password should have atleast 6 characters.</span>
-          <span class="error" *ngIf="passwordError !== '' "> {{passwordError}} </span>
         </div>
         <div class="text-center">
           <button class="btn btn-primary w-100" type="submit"
@@ -40,7 +40,7 @@
           >{{ isLoginMode ? 'Log In' : 'Sign Up' }}</button>
          <div><em>{{isLoginMode ? 'Not a member?' : 'Already a member?'}}</em>
           <button class="btn text-primary text-decoration-underline"
-          (click)="onSwitchMode()"
+          (click)="onSwitchMode(loginForm)"
           type="button"
           >{{ isLoginMode ? 'Signup' : 'Login' }}</button> </div>
         </div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
 import { authResponseData } from 'src/app/interfaces/auth-response-data';
 import { User } from 'src/app/models/user.model';
 
@@ -8,7 +8,8 @@ import { User } from 'src/app/models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
+
   constructor(private http: HttpClient){}
 
   //SignUp
@@ -70,6 +71,7 @@ export class AuthService {
     )
   }
 
+  //Handle user authentication
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     //generating expiration date
     const expirationDate = new Date(
@@ -82,5 +84,11 @@ export class AuthService {
       expirationDate
     );
     this.user.next(user);
+    console.log(this.user);
+  }
+
+  //Logout
+  logout() {
+    this.user.next(null);
   }
 }

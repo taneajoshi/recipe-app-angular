@@ -19,7 +19,7 @@ const routes: Routes = [
       import('./pages/shopping-list/shopping-list.module').then((m) => m.ShoppingListModule)
   },
   {
-    path: 'auth',
+    path: 'login',
     component: AuthComponent,
   },
 ];
