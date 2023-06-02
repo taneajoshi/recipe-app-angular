@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     .subscribe(
       resData => {
         console.log(resData);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/recipes');
       },
       errorMessage => {
         console.log(errorMessage);

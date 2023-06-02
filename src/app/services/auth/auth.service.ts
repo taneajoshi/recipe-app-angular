@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, TimeoutConfig, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { authResponseData } from 'src/app/interfaces/auth-response-data';
 import { User } from 'src/app/models/user.model';
 import { StorageService } from '../storage/storage.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient,
