@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from 'src/app/pages/recipes/recipe.model';
-import { Ingredient } from 'src/app/shared/ingredient.model';
 import { GenerateIngredientIdService } from '../generateIngredientId/generate-ingredient-id.service';
 import { Subject } from 'rxjs';
 import { GenerateRecipeIdService } from '../generateRecipeId/generate-recipe-id.service';
