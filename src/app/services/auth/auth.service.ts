@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.model';
 import { StorageService } from '../storage/storage.service';
 import { StorageKeys } from '../storage/storage-keys.enum';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
   //SignUp
   signUp(email: string, password: string) {
    return this.http
-    .post<authResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDjSsnl0kajSC75WX710Spqm08izPL2FF8', {
+    .post<authResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.FirebaseAPIKey, {
       email: email,
       password: password,
       //As per firebase Api Docs returnSecureToken should always be true
@@ -50,7 +51,7 @@ export class AuthService {
 
   //Login
   login(email: string, password: string) {
-    return this.http.post<authResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDjSsnl0kajSC75WX710Spqm08izPL2FF8', {
+    return this.http.post<authResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.FirebaseAPIKey, {
       email: email,
       password: password,
       //As per firebase Api Docs returnSecureToken should always be true
